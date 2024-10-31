@@ -8,22 +8,18 @@ date: "2024-10-31"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+```{r}
+# New function taking data as input to replace NA/missing values with the mean of non-NA values in the column Ozone
+replace_na_ozone <- function(data) {
+  #Identifies NA values in the Ozone column, calculates the mean of non-NA values, which is then used to replace with this mean
+  data$Ozone[is.na(data$Ozone)] <- mean(data$Ozone, na.rm = TRUE)
+  #Return changed data
+  return(data)
+}
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# Load the built-in R airquality dataset and apply the function
+replaced_airquality <- replace_na_ozone(airquality)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+#Display first few rows of changed dataset
+head(replaced_airquality)
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
